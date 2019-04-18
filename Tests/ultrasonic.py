@@ -1,6 +1,6 @@
 import atexit
 import RPi.GPIO as GPIO
-import time
+from time import sleep, time
 
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -29,19 +29,19 @@ def Ultrasonic_Sensor(GPIO_Numbers):
 
     GPIO.output(TRIG, 0)
     #print("Waiting for sensor to settle")
-    time.sleep(.1)
+    sleep(.1)
 
     GPIO.output(TRIG, 1)
-    time.sleep(0.00001)
+    sleep(0.00001)
     GPIO.output(TRIG, 0)
 
     while GPIO.input(ECHO) == 0:
         pass
-    pulse_start = time.time()
+    pulse_start = time()
 
     while GPIO.input(ECHO) == 1:
         pass
-    pulse_end = time.time()
+    pulse_end = time()
 
     pulse_duration = pulse_end - pulse_start
 
@@ -57,7 +57,7 @@ while(True):
     distance = Ultrasonic_Sensor(Sensor_Array[0])
     print(distance)
 
-    ax1.plot(count, lidar)
+    ax1.plot(count, distance)
     count += count
 
 atexit.register(GPIO.cleanup)
