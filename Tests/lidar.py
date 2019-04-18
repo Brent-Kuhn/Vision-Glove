@@ -56,5 +56,5 @@ def lidar():
 while(True):
     distance = lidar()
     print(distance)
-    ax1.plot(distance, lidar)
+    ax1.plot(count, distance)
     count += count
