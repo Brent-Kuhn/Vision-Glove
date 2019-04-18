@@ -2,6 +2,19 @@ import atexit
 import RPi.GPIO as GPIO
 import time
 
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+
+style.use('fivethirtyeight')
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
+
+count = 0
+
+ax1.clear()
+
 Sensor_Array = [[4, 17], [18, 27], [22, 23]]
 
 def Ultrasonic_Sensor(GPIO_Numbers):
@@ -41,6 +54,10 @@ def Ultrasonic_Sensor(GPIO_Numbers):
     return str(distance)
 
 while(True):
-    print(Ultrasonic_Sensor(Sensor_Array[0]))
+    distance = Ultrasonic_Sensor(Sensor_Array[0])
+    print(distance)
+
+    ax1.plot(count, lidar)
+    count += count
 
 atexit.register(GPIO.cleanup)

@@ -1,6 +1,19 @@
 import serial
 import time
 
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib import style
+
+style.use('fivethirtyeight')
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
+
+count = 0
+
+ax1.clear()
+
 ser = serial.Serial('/dev/ttyUSB0',115200,timeout = 1)
 
 #ser.write(0x42)
@@ -41,4 +54,7 @@ def lidar():
                 return str(Dist_Total)
 
 while(True):
-    print(lidar())
+    lidar = lidar()
+    print(lidar)
+    ax1.plot(count, lidar)
+    count += count
