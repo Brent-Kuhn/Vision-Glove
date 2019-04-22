@@ -40,6 +40,8 @@ def Ultrasonic_Sensor(GPIO_Numbers):
 
     distance = distance//1
 
+    GPIO.cleanup()
+
     return str(distance)
 
 # Implementation
@@ -61,4 +63,4 @@ finally:
     GPIO.cleanup() # this ensures a clean exit
 
 
-atexit.register(GPIO.cleanup)
+atexit.register(GPIO.cleanup())
