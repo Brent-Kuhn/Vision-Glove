@@ -32,7 +32,15 @@ void setup() {
 }
 void loop() {
   lidar();
-  mapped_dist = map(lidar_vals.distance, 1, 400, 1, 255);
+  
+  // Make sure that the values are in range
+  constrain(lidar_vals.distance, 0, 400);
+  
+  // Create a value for the motor/light to be inversely related to the distance
+  mapped_dist = map(lidar_vals.distance, 0, 400, 255, 0);
+  Serial.println("Mapped dist: ");
+  Serial.println(mapped_dist);
+  Serial.println("Lidar Value Distance: ");
   Serial.println(lidar_vals.distance);
   analogWrite(motorPin, mapped_dist);
 }
@@ -57,23 +65,14 @@ void lidar () {
           lidar_vals.distance = dist;
           strength = uart[4] + uart[5] * 256; //calculate signal strength value
           lidar_vals.strength = strength;
-          Serial.print("LiDAR dist = ");
-          Serial.print(dist); //output measure distance value of LiDAR
-          Serial.print('\t');
-          Serial.print("strength = ");
-          Serial.print(strength); //output signal strength value
-          Serial.print('\n');
-          if (lidar_vals.distance > 400)
-          {
-            lidar_vals.distance = 400;
-          }
-          if (lidar_vals.distance <= 0)
-          {
-            lidar_vals.distance = 1;  
-          }
+//          Serial.print("LiDAR dist = ");
+//          Serial.print(dist); //output measure distance value of LiDAR
+//          Serial.print('\t');
+//          Serial.print("strength = ");
+//          Serial.print(strength); //output signal strength value
+//          Serial.print('\n');
         }
       }
     }
   }
-  return 0;
 }
